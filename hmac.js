@@ -4,7 +4,7 @@ function bitwiseOr0x36(b) {"compiled";
 function bitwiseOr0x5c(b) {"compiled";
   return b ^ 0x5c; }
 
-class HMAC {
+export class HMAC {
   constructor(key, hash, blockSize, outputSize) {
     if ( key.byteLength > blockSize )
       key = hash(key);
@@ -23,5 +23,3 @@ class HMAC {
     return this.hash(this.oBuf);
   }
 }
-
-module.exports = HMAC;
