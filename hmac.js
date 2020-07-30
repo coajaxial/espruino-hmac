@@ -24,6 +24,36 @@ class HMAC {
   }
 }
 
-exports.create = function(key, hash, blockSize, outputSize) {
-  return new HMAC(key, hash, blockSize, outputSize);
-};
+class HMAC_SHA1 extends HMAC {
+  constructor(key) {
+    HMAC.call(key, crypto.SHA1, 64, 20);
+  }
+}
+
+class FixedMessageSizeHMAC extends HMAC {
+  constructor(key, messageSize, hash, blockSize, outputSize) {
+    HMAC.call(this, key, hash, blockSize, outputSize);
+    this.iBuf = new Uint8Array(this.keyLength + messageSize);
+    this.iBuf.set(this.iKeyPad, 0);
+    delete this.ikeyPad;
+  }
+  digest(message) {
+    this.iBuf.set(message, this.keyLength);
+    this.oBuf.set(this.hash(this.iBuf), this.keyLength);
+    return this.hash(this.oBuf);
+  }
+}
+
+class FixedMessageSizeHMAC_SHA1 extends FixedMessageSizeHMAC {
+  constructor(key, messageSize) {
+    FixedMessageSizeHMAC.call(this, key, messageSize, crypto.SHA1, 64, 20);
+  }
+}
+
+exports.SHA1 = function(key) {
+  return new HMAC_SHA1(key);
+}
+
+exports.SHA1Fixed = function(key, messageSize) {
+  return new FixedMessageSizeHMAC_SHA1(key, messageSize);
+}
