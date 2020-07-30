@@ -23,3 +23,5 @@ class HMAC {
     return this.hash(this.oBuf);
   }
 }
+
+module.exports = HMAC;
