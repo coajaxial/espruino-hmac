@@ -24,4 +24,6 @@ class HMAC {
   }
 }
 
-exports.HMAC = HMAC;
+exports.create = function(key, hash, blockSize, outputSize) {
+  return new HMAC(key, hash, blockSize, outputSize);
+};
