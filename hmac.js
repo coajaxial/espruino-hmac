@@ -6,7 +6,7 @@ function bitwiseOr0x36(b) {"compiled";
 function bitwiseOr0x5c(b) {"compiled";
   return b ^ 0x5c; }
 
-var HMAC = function(key, hash, blockSize, outputSize) {
+const HMAC = function(key, hash, blockSize, outputSize) {
   if ( key.byteLength > blockSize )
     key = hash(key);
   this.hash = hash;
@@ -25,7 +25,7 @@ HMAC.prototype.digest = function(message) {
   return this.hash(this.oBuf);
 };
 
-var FixedHMAC = function(key, messageSize, hash, blockSize, outputSize) {
+const FixedHMAC = function(key, messageSize, hash, blockSize, outputSize) {
   HMAC.call(this, key, hash, blockSize, outputSize);
   this.iBuf = new Uint8Array(this.keyLength + messageSize);
   this.iBuf.set(this.iKeyPad, 0);
